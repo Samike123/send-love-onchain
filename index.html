@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Zawadi - Social Gifting</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ 
+  <h1>🎁 Zawadi - Send love on-chain</h1>
+  <form id="giftForm">
+    <input type="text" id="recipient" placeholder="Recipient Name" required>
+    <textarea id="message" placeholder="Write your message..." required></textarea>
+    <select id="amount">
+      <option value="0.50">Send $0.50 USDC</option>
+      <option value="1.00">Send $1.00 USDC</option>
+    </select>
+    <label for="emoji">Choose an Emoji 🎁:</label>
+<select id="emoji">
+  <option value="🎉">🎉</option>
+  <option value="❤️">❤️</option>
+  <option value="🔥">🔥</option>
+  <option value="🎁">🎁</option>
+</select>
+<div class="form-group">
+  <label for="wallet">Recipient Wallet Address</label>
+  <input type="text" id="wallet" required placeholder="0x..." />
+</div>
+
+    <button type="submit">Send Gift</button>
+  </form>
+  <h2>🎁 Zawadi Public Feed</h2>
+<ul id="giftFeed"></ul>
+
+
+  <div id="receipt" class="hidden">
+    <h2>🎉 Gift Sent!</h2>
+    <p><strong>To:</strong> <span id="toName"></span></p>
+    <p><strong>Message:</strong> <span id="giftMsg"></span></p>
+    <p><strong>Amount:</strong> $<span id="giftAmt"></span> USDC</p>
+    <p><strong>Tx Hash:</strong> <code id="txHash"></code></p>
+    <p><strong>Emoji:</strong> <span id="giftEmoji"></span></p>
+    <p><strong>Wallet Address:</strong> <span id="walletAddr"></span></p>
+    <div class="share-buttons">
+      <p>🎉 Share your Zawadi!</p>
+      <button id="shareX">Share on X</button>
+      <button id="shareWA">Share on WhatsApp</button>
+    </div>
+    
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
