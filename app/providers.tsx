@@ -3,6 +3,7 @@
 import { WagmiConfig, createConfig } from 'wagmi';
 import { baseGoerli } from 'wagmi/chains';
 import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import '@rainbow-me/rainbowkit/styles.css';
 
 const config = getDefaultConfig({
@@ -12,12 +13,17 @@ const config = getDefaultConfig({
   ssr: true,
 });
 
+// ✅ Create query client instance
+const queryClient = new QueryClient();
+
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <WagmiConfig config={config}>
-      <RainbowKitProvider>
-        {children}
-      </RainbowKitProvider>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider>
+          {children}
+        </RainbowKitProvider>
+      </QueryClientProvider>
     </WagmiConfig>
   );
 }
