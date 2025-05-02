@@ -1,5 +1,11 @@
-// app/layout.tsx
-import React from 'react';
+import './globals.css';
+import { Providers } from './providers';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Zawadi – Send Love Onchain',
+  description: 'Send small gifts onchain using Base',
+};
 
 export default function RootLayout({
   children,
@@ -8,7 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
