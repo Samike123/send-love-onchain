@@ -1,24 +1,36 @@
-"use client";
+'use client';
 
-import { type ReactNode } from "react";
-import { base } from "wagmi/chains";
-import { MiniKitProvider } from "@coinbase/onchainkit/minikit";
+import { ReactNode } from 'react';
+import { WagmiConfig, createConfig, configureChains } from 'wagmi';
+import { base } from 'wagmi/chains';
+import { publicProvider } from 'wagmi/providers/public';
+import { PrivyProvider } from '@privy-io/react-auth';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-export function Providers(props: { children: ReactNode }) {
+const { publicClient, webSocketPublicClient } = configureChains([base], [publicProvider()]);
+
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  publicClient,
+  webSocketPublicClient,
+});
+
+const queryClient = new QueryClient();
+
+export function Providers({ children }: { children: ReactNode }) {
   return (
-    <MiniKitProvider
-      apiKey={process.env.NEXT_PUBLIC_ONCHAINKIT_API_KEY}
-      chain={base}
+    <PrivyProvider
+      appId={process.env.NEXT_PUBLIC_PRIVY_APP_ID!}
       config={{
-        appearance: {
-          mode: "auto",
-          theme: "mini-app-theme",
-          name: process.env.NEXT_PUBLIC_ONCHAINKIT_PROJECT_NAME,
-          logo: process.env.NEXT_PUBLIC_ICON_URL,
-        },
+        embeddedWallets: { createOnLogin: 'users-without-wallets' },
+        loginMethods: ['wallet', 'email', 'google', 'farcaster'],
       }}
     >
-      {props.children}
-    </MiniKitProvider>
+      <WagmiConfig config={wagmiConfig}>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      </WagmiConfig>
+    </PrivyProvider>
   );
 }
